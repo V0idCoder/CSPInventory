@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cspinventory.controller.MachineFormController"
+            stylesheets="@machine-details.css"
+            styleClass="details-root">
+
+    <top>
+        <GridPane hgap="12" alignment="CENTER" styleClass="header-pane">
+            <columnConstraints>
+                <ColumnConstraints minWidth="88"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints minWidth="280"/>
+            </columnConstraints>
+
+            <Button text="←" onAction="#onCancel" styleClass="back-btn" GridPane.columnIndex="0">
+                <tooltip>
+                    <Tooltip text="Retour"/>
+                </tooltip>
+            </Button>
+
+            <VBox spacing="3" GridPane.columnIndex="1">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label fx:id="titleLabel" text="Nouvelle machine" styleClass="details-title"/>
+                    <Label fx:id="statusDotLabel" text="●" styleClass="status-dot"/>
+                </HBox>
+                <Label fx:id="subtitleLabel" text="Creation" styleClass="muted-text"/>
+            </VBox>
+
+            <HBox spacing="8" alignment="BOTTOM_RIGHT" GridPane.columnIndex="2">
+                <Button fx:id="deleteButton" text="Supprimer" onAction="#onDelete" styleClass="secondary-btn"/>
+                <Button text="Annuler" onAction="#onCancel" styleClass="secondary-btn"/>
+                <Button fx:id="actionButton" text="Creer" defaultButton="true" onAction="#onSave" styleClass="primary-btn"/>
+            </HBox>
+        </GridPane>
+    </top>
+
+    <center>
+        <GridPane hgap="16" vgap="0" alignment="CENTER" maxWidth="1600">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="67" hgrow="ALWAYS"/>
+                <ColumnConstraints percentWidth="33" minWidth="320"/>
+            </columnConstraints>
+
+            <VBox styleClass="card-pane" GridPane.columnIndex="0">
+                <ScrollPane fitToWidth="true" styleClass="clean-scroll">
+                    <content>
+                        <GridPane hgap="12" vgap="8">
+                            <padding>
+                                <Insets top="6" right="8" bottom="6" left="6"/>
+                            </padding>
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="160" prefWidth="160"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+
+                            <Label text="Nom reseau" styleClass="muted-text" GridPane.rowIndex="0"/>
+                            <TextField fx:id="nomReseauField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                            <Label text="Serie" styleClass="muted-text" GridPane.rowIndex="1"/>
+                            <TextField fx:id="serieNmbField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                            <Label text="Modele" styleClass="muted-text" GridPane.rowIndex="2"/>
+                            <TextField fx:id="modelField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                            <Label text="Utilisateur" styleClass="muted-text" GridPane.rowIndex="3"/>
+                            <TextField fx:id="utilisateurField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                            <Label text="Emplacement" styleClass="muted-text" GridPane.rowIndex="4"/>
+                            <TextField fx:id="emplacementField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                            <Label fx:id="siteLabel" text="Site" styleClass="muted-text" GridPane.rowIndex="5"/>
+                            <ComboBox fx:id="siteField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                            <Label fx:id="lieuLabel" text="Lieu" styleClass="muted-text" GridPane.rowIndex="6"/>
+                            <ComboBox fx:id="lieuField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+                            <Label text="IPv4 RJ45" styleClass="muted-text" GridPane.rowIndex="7"/>
+                            <TextField fx:id="ipv4RJ45Field" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+                            <Label text="IPv4 Wifi" styleClass="muted-text" GridPane.rowIndex="8"/>
+                            <TextField fx:id="ipv4WifiField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+
+                            <Label text="MAC Ethernet" styleClass="muted-text" GridPane.rowIndex="9"/>
+                            <TextField fx:id="macEthernetField" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+
+                            <Label text="MAC Wifi" styleClass="muted-text" GridPane.rowIndex="10"/>
+                            <TextField fx:id="macWifiField" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+
+                            <Label text="VLAN" styleClass="muted-text" GridPane.rowIndex="11"/>
+                            <TextField fx:id="vlanField" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+
+                            <Label text="Garantie" styleClass="muted-text" GridPane.rowIndex="12"/>
+                            <CheckBox fx:id="garantieField" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+
+                            <Label text="Statut" styleClass="muted-text" GridPane.rowIndex="13"/>
+                            <ComboBox fx:id="statutField" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
+
+                            <Label text="Date d'achat" styleClass="muted-text" GridPane.rowIndex="14"/>
+                            <DatePicker fx:id="purchaseDateField" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
+
+                            <Label text="Date mise en service" styleClass="muted-text" GridPane.rowIndex="15"/>
+                            <DatePicker fx:id="dateMiseEnServiceField" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
+
+                            <Label text="Note" styleClass="muted-text" GridPane.rowIndex="16"/>
+                            <TextArea fx:id="noteField" prefRowCount="4" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="16"/>
+                        </GridPane>
+                    </content>
+                </ScrollPane>
+            </VBox>
+
+            <VBox spacing="16" alignment="TOP_CENTER" GridPane.columnIndex="1">
+                <VBox styleClass="card-pane">
+                    <VBox spacing="8">
+                        <Label text="Image modele" styleClass="card-title"/>
+                        <Label text="Basee sur le champ Modele" styleClass="muted-text"/>
+                        <StackPane prefHeight="200" styleClass="image-placeholder">
+                            <ImageView fx:id="modelPreviewImageView"
+                                       fitHeight="180"
+                                       fitWidth="290"
+                                       preserveRatio="true"
+                                       smooth="true"
+                                       pickOnBounds="true"/>
+                            <Label fx:id="modelPreviewLabel" text="Apercu modele" styleClass="muted-text"/>
+                        </StackPane>
+                        <Label fx:id="modelValueLabel" text="-" styleClass="muted-text"/>
+                    </VBox>
+                </VBox>
+
+                <VBox styleClass="card-pane">
+                    <VBox spacing="8">
+                        <Label text="Audit" styleClass="card-title"/>
+                        <Label fx:id="auditStateLabel" text="Non sauvegarde" styleClass="muted-text"/>
+                        <Label fx:id="auditDateModifLabel" text="-"/>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </GridPane>
+    </center>
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+</BorderPane>
