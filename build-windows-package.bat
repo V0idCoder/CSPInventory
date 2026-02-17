@@ -65,8 +65,9 @@ jpackage ^
   --dest "%OUTPUT_DIR%" ^
   --input "%INPUT_DIR%" ^
   --main-jar "%APP_JAR%" ^
-  --main-class com.cspinventory.app.MainApp ^
-  --java-options "-Dfile.encoding=UTF-8"
+  --main-class com.cspinventory.app.Launcher ^
+  --java-options "-Dfile.encoding=UTF-8" ^
+  --win-console
 
 if errorlevel 1 exit /b 1
 
@@ -78,11 +79,12 @@ if /I "%1"=="msi" (
       --dest "%OUTPUT_DIR%" ^
       --input "%INPUT_DIR%" ^
       --main-jar "%APP_JAR%" ^
-      --main-class com.cspinventory.app.MainApp ^
+      --main-class com.cspinventory.app.Launcher ^
       --java-options "-Dfile.encoding=UTF-8" ^
       --win-dir-chooser ^
       --win-menu ^
-      --win-shortcut
+      --win-shortcut ^
+      --win-console
     if errorlevel 1 exit /b 1
 )
 

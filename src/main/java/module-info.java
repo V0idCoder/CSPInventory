@@ -7,6 +7,7 @@ module com.cspinventory {
     requires org.apache.poi.poi;
     requires org.xerial.sqlitejdbc;
     requires java.logging;
+    requires java.desktop;
 
     opens com.cspinventory.controller to javafx.fxml;
 

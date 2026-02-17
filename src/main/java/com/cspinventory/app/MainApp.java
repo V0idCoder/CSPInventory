@@ -36,6 +36,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         configureLogging();
+        StartupDiagnostics.info("MainApp.start invoked");
         try {
             AppPaths appPaths = AppPaths.resolveDefault();
             appPaths.ensureDirectories();
@@ -63,13 +64,21 @@ public class MainApp extends Application {
             primaryStage.setMinHeight(620);
             primaryStage.setMaximized(true);
             primaryStage.show();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOGGER.log(Level.SEVERE, "Application startup failed", e);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Demarrage impossible");
-            alert.setHeaderText("Erreur initialisation");
-            alert.setContentText("L'application ne peut pas demarrer. Details: " + e.getMessage());
-            alert.showAndWait();
+            StartupDiagnostics.error("Application startup failed inside JavaFX start()", e);
+            try {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Demarrage impossible");
+                alert.setHeaderText("Erreur initialisation");
+                alert.setContentText(
+                        "L'application ne peut pas demarrer. Details: " + e.getMessage()
+                                + "\nLog: " + StartupDiagnostics.getLogFile()
+                );
+                alert.showAndWait();
+            } catch (Throwable dialogError) {
+                StartupDiagnostics.error("Unable to show JavaFX startup alert dialog", dialogError);
+            }
             Platform.exit();
         }
     }
