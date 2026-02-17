@@ -66,8 +66,7 @@ jpackage ^
   --input "%INPUT_DIR%" ^
   --main-jar "%APP_JAR%" ^
   --main-class com.cspinventory.app.MainApp ^
-  --java-options "-Dfile.encoding=UTF-8" ^
-  --win-shortcut
+  --java-options "-Dfile.encoding=UTF-8"
 
 if errorlevel 1 exit /b 1
 
