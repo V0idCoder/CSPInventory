@@ -25,6 +25,7 @@
                 <VBox spacing="3">
                     <Label text="Machines" styleClass="page-title"/>
                     <Label fx:id="machinesCountLabel" text="0 machines" styleClass="muted-text"/>
+                    <Label fx:id="databaseStatusLabel" text="Backup session: aucun chargement" styleClass="muted-text"/>
                 </VBox>
 
                 <HBox spacing="8" GridPane.columnIndex="1" alignment="BOTTOM_RIGHT">
@@ -43,7 +44,11 @@
                             <Tooltip text="Exporter Excel"/>
                         </tooltip>
                     </Button>
-                    <Button fx:id="editButton" text="Editer" onAction="#onEditMachine" styleClass="secondary-btn"/>
+                    <Button fx:id="restoreBackupButton" text="⤒ Backup" onAction="#onRestoreBackup" styleClass="secondary-btn">
+                        <tooltip>
+                            <Tooltip text="Charger une sauvegarde .db"/>
+                        </tooltip>
+                    </Button>
                     <Button fx:id="deleteButton" text="Supprimer" onAction="#onDeleteMachine" styleClass="secondary-btn"/>
                 </HBox>
             </GridPane>

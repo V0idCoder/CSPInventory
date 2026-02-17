@@ -1,0 +1,14 @@
+# Build outputs
+target/
+
+# OS files
+.DS_Store
+
+# Local runtime data (outside source code)
+inventory.db
+backups/
+CSPInventory/
+
+# IDE
+.idea/
+*.iml

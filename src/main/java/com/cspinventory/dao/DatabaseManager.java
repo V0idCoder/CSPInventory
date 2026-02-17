@@ -25,10 +25,12 @@ public class DatabaseManager {
     public void initialize() {
         try (Connection connection = getConnection(); Statement statement = connection.createStatement()) {
             statement.execute("PRAGMA journal_mode=WAL");
+            statement.execute("PRAGMA busy_timeout=5000");
             migrateLegacyTable(statement);
             createMachinesTable(statement);
             ensureColumnExists(statement, "Maintenance", "INTEGER NOT NULL DEFAULT 0");
             ensureColumnExists(statement, "DateModif", "TEXT");
+            createIndexes(statement);
             LOGGER.info("SQLite initialized at " + dbPath);
         } catch (SQLException e) {
             throw new RuntimeException("Unable to initialize SQLite database", e);
@@ -75,6 +77,12 @@ public class DatabaseManager {
         if (!columnExists(statement, "Machines", columnName)) {
             statement.execute("ALTER TABLE Machines ADD COLUMN " + columnName + " " + ddlDefinition);
         }
+    }
+
+    private void createIndexes(Statement statement) throws SQLException {
+        statement.execute("CREATE INDEX IF NOT EXISTS idx_machines_nomreseau ON Machines (NomReseau)");
+        statement.execute("CREATE INDEX IF NOT EXISTS idx_machines_site ON Machines (Site)");
+        statement.execute("CREATE INDEX IF NOT EXISTS idx_machines_lieu ON Machines (Lieu)");
     }
 
     private boolean tableExists(Statement statement, String tableName) throws SQLException {

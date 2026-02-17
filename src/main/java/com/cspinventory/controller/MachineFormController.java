@@ -22,10 +22,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class MachineFormController {
 
     private static final DateTimeFormatter AUDIT_FMT = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    private static final Pattern IPV4_PATTERN = Pattern.compile(
+            "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\."
+                    + "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\."
+                    + "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\."
+                    + "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$"
+    );
+    private static final Pattern MAC_PATTERN = Pattern.compile("^([0-9A-Fa-f]{2}([-:])){5}[0-9A-Fa-f]{2}$");
 
     @FXML
     private TextField nomReseauField;
@@ -189,6 +197,7 @@ public class MachineFormController {
             if (machine.getLieu() == null || machine.getLieu().isBlank()) {
                 throw new IllegalArgumentException("Le champ Lieu est obligatoire.");
             }
+            validateNetworkFields(machine);
 
             Long excludeId = machine.getId();
             if (machineService != null && machineService.isNomReseauTaken(machine.getNomReseau(), excludeId)) {
@@ -363,5 +372,28 @@ public class MachineFormController {
         }
         String trimmed = value.trim();
         return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    private void validateNetworkFields(Machine machine) {
+        if (!isValidIPv4(machine.getIpv4RJ45())) {
+            throw new IllegalArgumentException("IPv4 RJ45 invalide (format attendu: 192.168.1.10)");
+        }
+        if (!isValidIPv4(machine.getIpv4Wifi())) {
+            throw new IllegalArgumentException("IPv4 Wifi invalide (format attendu: 192.168.1.10)");
+        }
+        if (!isValidMacAddress(machine.getMacEthernet())) {
+            throw new IllegalArgumentException("MAC Ethernet invalide (format attendu: AA:BB:CC:DD:EE:FF)");
+        }
+        if (!isValidMacAddress(machine.getMacWifi())) {
+            throw new IllegalArgumentException("MAC Wifi invalide (format attendu: AA:BB:CC:DD:EE:FF)");
+        }
+    }
+
+    private boolean isValidIPv4(String value) {
+        return value == null || IPV4_PATTERN.matcher(value).matches();
+    }
+
+    private boolean isValidMacAddress(String value) {
+        return value == null || MAC_PATTERN.matcher(value).matches();
     }
 }

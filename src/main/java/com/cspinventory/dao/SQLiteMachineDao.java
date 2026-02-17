@@ -115,7 +115,10 @@ public class SQLiteMachineDao implements MachineDao {
             PreparedStatement ps = conn.prepareStatement(sql)) {
             bind(machine, ps);
             ps.setLong(20, machine.getId());
-            ps.executeUpdate();
+            int updatedRows = ps.executeUpdate();
+            if (updatedRows != 1) {
+                throw new IllegalArgumentException("Machine introuvable pour id " + machine.getId());
+            }
             return machine;
         } catch (SQLException e) {
             throw new RuntimeException("Cannot update machine", e);
