@@ -22,6 +22,12 @@ if errorlevel 1 (
     exit /b 1
 )
 
+if "%MAVEN_OPTS%"=="" (
+    set "MAVEN_OPTS=-Djavax.net.ssl.trustStoreType=Windows-ROOT"
+) else (
+    set "MAVEN_OPTS=%MAVEN_OPTS% -Djavax.net.ssl.trustStoreType=Windows-ROOT"
+)
+
 echo [1/4] Build Maven ^(wrapper en priorite^)...
 call "%MVN_CMD%" -DskipTests clean package
 if errorlevel 1 exit /b 1
