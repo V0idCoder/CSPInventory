@@ -57,20 +57,23 @@
 
     <center>
         <VBox spacing="14" fillWidth="true" alignment="TOP_CENTER">
-            <StackPane fx:id="contentStack" VBox.vgrow="ALWAYS">
-                <GridPane hgap="16" vgap="0" maxWidth="1820">
+            <StackPane fx:id="contentStack" VBox.vgrow="ALWAYS" minHeight="0">
+                <GridPane hgap="16" vgap="0" maxWidth="1820" maxHeight="1.7976931348623157E308">
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS" fillHeight="true"/>
+                    </rowConstraints>
                     <columnConstraints>
                         <ColumnConstraints percentWidth="74" hgrow="ALWAYS"/>
                         <ColumnConstraints percentWidth="26" minWidth="320" prefWidth="340"/>
                     </columnConstraints>
 
-                    <VBox GridPane.columnIndex="0" spacing="10" styleClass="card-pane table-card">
+                    <VBox GridPane.columnIndex="0" spacing="10" styleClass="card-pane table-card" GridPane.vgrow="ALWAYS" minHeight="0">
                         <HBox spacing="6" alignment="CENTER_LEFT" styleClass="search-box">
                             <Label text="⌕" styleClass="search-icon"/>
                             <TextField fx:id="searchField" promptText="Filtre texte sur champs principaux" styleClass="search-field" HBox.hgrow="ALWAYS"/>
                         </HBox>
 
-                        <TableView fx:id="machineTable" VBox.vgrow="ALWAYS" styleClass="machine-table">
+                        <TableView fx:id="machineTable" VBox.vgrow="ALWAYS" styleClass="machine-table" minHeight="0">
                             <columns>
                                 <TableColumn fx:id="nomReseauColumn" text="Nom reseau" prefWidth="180"/>
                                 <TableColumn fx:id="serieColumn" text="Serie" prefWidth="140"/>
@@ -84,7 +87,7 @@
                         </TableView>
                     </VBox>
 
-                    <VBox GridPane.columnIndex="1" spacing="12" styleClass="card-pane side-card">
+                    <VBox GridPane.columnIndex="1" spacing="12" styleClass="card-pane side-card" GridPane.vgrow="ALWAYS" minHeight="0">
                         <Label text="Fiche rapide" styleClass="card-title"/>
                         <Label text="Selectionne une machine pour voir les details." styleClass="muted-text" wrapText="true"/>
 
@@ -138,18 +141,8 @@
                 </StackPane>
             </StackPane>
 
-            <GridPane hgap="12" vgap="12" maxWidth="1820" styleClass="widgets-shell" VBox.vgrow="ALWAYS">
-                <columnConstraints>
-                    <ColumnConstraints percentWidth="25" hgrow="ALWAYS"/>
-                    <ColumnConstraints percentWidth="25" hgrow="ALWAYS"/>
-                    <ColumnConstraints percentWidth="25" hgrow="ALWAYS"/>
-                    <ColumnConstraints percentWidth="25" hgrow="ALWAYS"/>
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints vgrow="ALWAYS" fillHeight="true"/>
-                </rowConstraints>
-
-                <VBox styleClass="widget-card" spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0" maxHeight="1.7976931348623157E308">
+            <TilePane hgap="12" vgap="12" prefColumns="4" prefTileWidth="290" maxWidth="1820" styleClass="widgets-shell" tileAlignment="TOP_LEFT" VBox.vgrow="NEVER">
+                <VBox styleClass="widget-card" spacing="8">
                     <Label text="Statuts" styleClass="widget-title"/>
                     <HBox spacing="6" alignment="CENTER_LEFT">
                         <Label text="●" style="-fx-text-fill: #16A34A;"/>
@@ -168,23 +161,23 @@
                     </HBox>
                 </VBox>
 
-                <VBox styleClass="widget-card" spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0" maxHeight="1.7976931348623157E308">
+                <VBox styleClass="widget-card" spacing="8">
                     <Label text="Top Lieux" styleClass="widget-title"/>
                     <Label fx:id="topLieuxLabel" text="-" styleClass="widget-list" wrapText="true"/>
                 </VBox>
 
-                <VBox styleClass="widget-card" spacing="8" GridPane.columnIndex="2" GridPane.rowIndex="0" maxHeight="1.7976931348623157E308">
+                <VBox styleClass="widget-card" spacing="8">
                     <Label text="Sites" styleClass="widget-title"/>
                     <Label fx:id="siteDistributionLabel" text="-" styleClass="widget-list" wrapText="true"/>
                 </VBox>
 
-                <VBox styleClass="widget-card" spacing="8" GridPane.columnIndex="3" GridPane.rowIndex="0" maxHeight="1.7976931348623157E308">
+                <VBox styleClass="widget-card" spacing="8">
                     <Label text="Qualite Donnees" styleClass="widget-title"/>
                     <Label fx:id="garantieCountLabel" text="-" styleClass="widget-list" wrapText="true"/>
                     <Label fx:id="networkCoverageLabel" text="-" styleClass="widget-list" wrapText="true"/>
                     <Label fx:id="lastUpdateLabel" text="-" styleClass="muted-text" wrapText="true"/>
                 </VBox>
-            </GridPane>
+            </TilePane>
         </VBox>
     </center>
 
