@@ -7,7 +7,7 @@ target/
 # Local runtime data (outside source code)
 inventory.db
 backups/
-CSPInventory/
+/CSPInventory/
 
 # IDE
 .idea/
