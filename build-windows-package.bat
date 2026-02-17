@@ -3,10 +3,17 @@ setlocal EnableExtensions EnableDelayedExpansion
 
 cd /d "%~dp0"
 
-where mvn >nul 2>nul
-if errorlevel 1 (
-    echo Maven introuvable. Installe Maven puis relance.
-    exit /b 1
+set "MVN_CMD="
+if exist "%~dp0mvnw.cmd" (
+    set "MVN_CMD=%~dp0mvnw.cmd"
+) else (
+    where mvn >nul 2>nul
+    if errorlevel 1 (
+        echo Maven introuvable et Maven Wrapper absent.
+        echo Ajoute le fichier mvnw.cmd au projet ou installe Maven.
+        exit /b 1
+    )
+    set "MVN_CMD=mvn"
 )
 
 where jpackage >nul 2>nul
@@ -15,8 +22,8 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo [1/4] Build Maven...
-call mvn -DskipTests clean package
+echo [1/4] Build Maven ^(wrapper en priorite^)...
+call "%MVN_CMD%" -DskipTests clean package
 if errorlevel 1 exit /b 1
 
 set "INPUT_DIR=target\jpackage-input"

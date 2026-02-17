@@ -3,15 +3,16 @@
 ## Lancer en dev
 
 ```bash
-mvn javafx:run
+./mvnw javafx:run
 ```
 
-Pre-requis: Java 21 et Maven.
+Pre-requis: Java 21.
+Si `mvnw` n'est pas present, tu peux utiliser `mvn` a la place.
 
 ## Build portable
 
 ```bash
-mvn -Pportable clean package
+./mvnw -Pportable clean package
 ```
 
 Le build produit un ZIP portable dans `target/`:
@@ -53,8 +54,10 @@ Resultat supplementaire:
 Pre-requis (machine de build Windows):
 
 - JDK 21 (avec `jpackage`)
-- Maven
+- Maven non requis si `mvnw.cmd` est present (wrapper inclus dans le repo)
 - Optionnel pour MSI: WiX Toolset (si `jpackage` le demande)
+
+Au premier lancement du wrapper, Internet est necessaire pour telecharger Maven automatiquement.
 
 ## Dossiers accessibles (models / backups / data)
 
