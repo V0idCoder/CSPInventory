@@ -3,7 +3,7 @@ package com.cspinventory.service;
 import com.cspinventory.model.Machine;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import java.io.IOException;
@@ -27,7 +27,8 @@ public class ExcelExportService {
     public void export(List<Machine> machines, Path destination) {
         try (SXSSFWorkbook workbook = new SXSSFWorkbook(200)) {
             workbook.setCompressTempFiles(true);
-            Sheet sheet = workbook.createSheet("Machines");
+            SXSSFSheet sheet = workbook.createSheet("Machines");
+            sheet.trackAllColumnsForAutoSizing();
 
             Row headerRow = sheet.createRow(0);
             for (int i = 0; i < HEADERS.length; i++) {
@@ -85,11 +86,15 @@ public class ExcelExportService {
         return value == null ? "" : value;
     }
 
-    private void resizeColumns(Sheet sheet, int rowCount) {
+    private void resizeColumns(SXSSFSheet sheet, int rowCount) {
         if (rowCount <= AUTO_SIZE_MAX_ROWS) {
             for (int i = 0; i < HEADERS.length; i++) {
-                sheet.autoSizeColumn(i);
-                sheet.setColumnWidth(i, Math.min(sheet.getColumnWidth(i) + 800, 12000));
+                try {
+                    sheet.autoSizeColumn(i);
+                    sheet.setColumnWidth(i, Math.min(sheet.getColumnWidth(i) + 800, 12000));
+                } catch (RuntimeException ignored) {
+                    sheet.setColumnWidth(i, 5200);
+                }
             }
             return;
         }
